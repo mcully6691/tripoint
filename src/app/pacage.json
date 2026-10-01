@@ -1,0 +1,21 @@
+{
+  "name": "tripoint-mesh-root",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo for TriPoint Mesh SDK and Field Testing Harness App",
+  "author": "TriPoint Mesh",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces",
+    "build": "npm run build --workspace=@tripoint/mesh-sdk",
+    "start:harness": "npm run start --workspace=mobile-harness",
+    "clean": "rm -rf node_modules packages/*/node_modules apps/*/node_modules"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
