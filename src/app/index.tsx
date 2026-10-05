@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import * as Location from 'expo-location';
+import { useEffect, useState } from 'react';
 import {
+  SafeAreaView,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
-  SafeAreaView,
-  ActivityIndicator
+  View
 } from 'react-native';
-import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { encodeBlePayload, decodeBlePayload } from './utils/blePayload';
-import { logMetric, initTestLogger } from './logger';
+import { initTestLogger, logMetric } from '../../logger';
+
 
 // Built-in Google Plus Code Generator (100% Offline)
 function encodePlusCode(latitude: number, longitude: number): string {
+  if (latitude == null|| longitude == null) return 'Awaiting fix...';
   const CODE_ALPHABET = '23456789CFGHJMPQRVWX';
   let lat = Math.min(Math.max(latitude, -90), 90) + 90;
   let lng = longitude;
