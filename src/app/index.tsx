@@ -12,36 +12,42 @@ import TriPointBle from '../../modules/tripoint-ble';
 
 
 // Built-in Google Plus Code Generator (100% Offline)
+
 function encodePlusCode(latitude: number, longitude: number): string {
-  if (latitude == null|| longitude == null) return 'Awaiting fix...';
-  const CODE_ALPHABET = '23456789CFGHJMPQRVWX';
-  let lat = Math.min(Math.max(latitude, -90), 90) + 90;
-  let lng = longitude;
-  while (lng < -180) lng += 360;
-  while (lng > 180) lng -= 360;
-  lng += 180;
+  if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
+    return 'Awaiting fix...';
+  }
 
-  let latVal = Math.floor(lat * 8000);
-  let lngVal = Math.floor(lng * 8000);
+  const alphabet = '23456789CFGHJMPQRVWX';
 
+  const lat = Math.min(90 - 1e-12, Math.max(-90, latitude));
+  const lng = ((longitude + 180) % 360 + 360) % 360 - 180;
+
+  let latValue = Math.floor((lat + 90) * 8000);
+  let lngValue = Math.floor((lng + 180) * 8000);
+
+  const divisors = [160000, 8000, 400, 20, 1];
   let code = '';
-  code += CODE_ALPHABET[Math.floor(latVal / 320000)] + CODE_ALPHABET[Math.floor(lngVal / 320000)];
-  latVal %= 320000; lngVal %= 320000;
 
-  code += CODE_ALPHABET[Math.floor(latVal / 16000)] + CODE_ALPHABET[Math.floor(lngVal / 16000)];
-  latVal %= 16000; lngVal %= 16000;
+  for (let i = 0; i < divisors.length; i++) {
+    const divisor = divisors[i];
 
-  code += CODE_ALPHABET[Math.floor(latVal / 800)] + CODE_ALPHABET[Math.floor(lngVal / 800)];
-  latVal %= 800; lngVal %= 800;
+    const latDigit = Math.floor(latValue / divisor);
+    const lngDigit = Math.floor(lngValue / divisor);
 
-  code += CODE_ALPHABET[Math.floor(latVal / 40)] + CODE_ALPHABET[Math.floor(lngVal / 40)];
-  latVal %= 40; lngVal %= 40;
+    code += alphabet[latDigit] + alphabet[lngDigit];
 
-  code += '+';
-code += CODE_ALPHABET[Math.floor(latVal / 2)];
-code += CODE_ALPHABET[Math.floor(lngVal / 2)];
-return code;
+    latValue %= divisor;
+    lngValue %= divisor;
+
+    if (i === 3) {
+      code += '+';
+    }
+  }
+
+  return code;
 }
+
 
 export default function FieldTestScreen() {
   const [activeScenario, setActiveScenario] = useState<'CONCOURSE' | 'IN_SEAT' | 'DEAD_ZONE'>('CONCOURSE');
