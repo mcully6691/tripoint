@@ -37,8 +37,10 @@ function encodePlusCode(latitude: number, longitude: number): string {
   code += CODE_ALPHABET[Math.floor(latVal / 40)] + CODE_ALPHABET[Math.floor(lngVal / 40)];
   latVal %= 40; lngVal %= 40;
 
-  code += '+' + CODE_ALPHABET[latVal * 2 / 40] + CODE_ALPHABET[lngVal * 2 / 40];
-  return code;
+  code += '+';
+code += CODE_ALPHABET[Math.floor(latVal / 2)];
+code += CODE_ALPHABET[Math.floor(lngVal / 2)];
+return code;
 }
 
 export default function FieldTestScreen() {
