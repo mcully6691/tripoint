@@ -11,7 +11,9 @@
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "com.martincully.Tripoint",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+  "ITSAppUsesNonExemptEncryption": false,
+  "NSBluetoothAlwaysUsageDescription": "TriPoint uses Bluetooth to communicate with nearby devices."
+}
       }
     },
     "android": {
