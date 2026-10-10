@@ -45,7 +45,7 @@ export default function FieldTestScreen() {
   const [activeScenario, setActiveScenario] = useState<'CONCOURSE' | 'IN_SEAT' | 'DEAD_ZONE'>('CONCOURSE');
   const [statusMessage, setStatusMessage] = useState('Initializing sensors...');
   const [currentPlusCode, setCurrentPlusCode] = useState<string>('Searching...');
-
+const [nearbyPhone, setNearbyPhone] = useState<string>('No phone detected');
   useEffect(() => {
     initTestLogger();
     (async () => {
@@ -64,7 +64,23 @@ setStatusMessage('Sensors locked');
   }, []);
 
 useEffect(() => {
+  const peerListener = TriPointBle.addListener(
+    'onPeer',
+    (event: { id: string; payload: string; seenAt: number }) => {
+      if (event.payload.startsWith('TriPoint|Nearby|')) {
+        const code = event.payload.split('|')[2];
+        setNearbyPhone(code || 'Location unavailable');
+      }
+    }
+  );
+
   TriPointBle.start();
+
+  return () => {
+    peerListener.remove();
+    TriPointBle.stop();
+  };
+}, []);
 
   return () => {
     TriPointBle.stop();
@@ -89,7 +105,8 @@ useEffect(() => {
       <Text style={styles.title}>TriPoint Field Harness</Text>
       <Text style={styles.plusCodeLabel}>Offline Grid Location:</Text>
       <Text style={styles.plusCodeVal}>{currentPlusCode}</Text>
-
+<Text style={styles.plusCodeLabel}>Nearby TriPoint Phone:</Text>
+<Text style={styles.plusCodeVal}>{nearbyPhone}</Text>
       <View style={styles.scenarioRow}>
         {(['CONCOURSE', 'IN_SEAT', 'DEAD_ZONE'] as const).map((scenario) => (
           <TouchableOpacity
