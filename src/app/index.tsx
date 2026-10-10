@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native';
 import { initTestLogger, logMetric } from '../../logger';
+import TriPointBle from '../../modules/tripoint-ble';
 
 
 // Built-in Google Plus Code Generator (100% Offline)
