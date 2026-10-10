@@ -14,8 +14,9 @@
   "ITSAppUsesNonExemptEncryption": false,
   "NSBluetoothAlwaysUsageDescription": "TriPoint uses Bluetooth to communicate with nearby devices."
 }
-      }
-    },
+    },    
+    
+  
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
