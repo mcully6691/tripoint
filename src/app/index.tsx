@@ -61,6 +61,14 @@ export default function FieldTestScreen() {
     })();
   }, []);
 
+useEffect(() => {
+  TriPointBle.start();
+
+  return () => {
+    TriPointBle.stop();
+  };
+}, []);
+
   const handleLogSample = async () => {
     await logMetric({
       timestamp: new Date().toISOString(),
