@@ -30,7 +30,6 @@ jobs:
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
-       - name: Check Expo configuration
-        run: npx expo config --json
+       
       - name: Build iPhone development app
         run: eas build --platform ios --profile development --non-interactive --no-wait
