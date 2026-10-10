@@ -11,7 +11,7 @@ jobs:
   build-ios:
     runs-on: ubuntu-latest
 
-    steps:
+     steps:
       - name: Checkout Bluetooth branch
         uses: actions/checkout@v4
         with:
