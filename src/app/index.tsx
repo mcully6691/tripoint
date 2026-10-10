@@ -56,8 +56,10 @@ export default function FieldTestScreen() {
       }
       let loc = await Location.getCurrentPositionAsync({});
       const code = encodePlusCode(loc.coords.latitude, loc.coords.longitude);
-      setCurrentPlusCode(code);
-      setStatusMessage('Sensors locked');
+setCurrentPlusCode(code);
+TriPointBle.updatePayload(`TriPoint|Nearby|${code}`);
+setStatusMessage('Sensors locked');
+      
     })();
   }, []);
 
