@@ -113,3 +113,6 @@ public class TriPointBleModule: Module, CBCentralManagerDelegate, CBPeripheralMa
     if started, central.state == .poweredOn {
       central.stopScan()
       central.scanForPeripherals(withServices: [serviceID], options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
+    }
+  }
+}
