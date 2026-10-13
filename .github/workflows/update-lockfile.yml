@@ -1,0 +1,36 @@
+
+name: Update TriPoint Dependencies
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-lockfile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Bluetooth branch
+        uses: actions/checkout@v4
+        with:
+          ref: bluetooth-development
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Update package lock
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+
+      - name: Save updated lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Bluetooth dependencies lockfile"
+            git push origin HEAD:bluetooth-development
+          fi
