@@ -12,12 +12,10 @@
       "icon": "./assets/expo.icon",
       "bundleIdentifier": "com.martincully.Tripoint",
       "infoPlist": {
-  "ITSAppUsesNonExemptEncryption": false,
-  "NSBluetoothAlwaysUsageDescription": "TriPoint uses Bluetooth to communicate with nearby devices."
-}
-    },    
-    
-  
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSBluetoothAlwaysUsageDescription": "TriPoint uses Bluetooth to communicate with nearby devices."
+      }
+    },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -25,7 +23,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.martincully.tripoint"
     },
     "web": {
       "output": "static",
@@ -54,4 +53,3 @@
     }
   }
 }
-    

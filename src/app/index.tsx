@@ -90,10 +90,6 @@ useEffect(() => {
   };
 }, []);
 
-  return () => {
-    TriPointBle.stop();
-  };
-}, []);
 
   const handleLogSample = async () => {
     await logMetric({

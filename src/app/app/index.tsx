@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Location from 'expo-location';
+import { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
+  FlatList,
+  Keyboard,
   StyleSheet,
   Text,
-  View,
-  FlatList,
-  ActivityIndicator,
   TextInput,
   TouchableOpacity,
-  Keyboard,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as Location from 'expo-location';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { encodeBlePayload, decodeBlePayload } from '../utils/blePayload';
+import { decodeBlePayload, encodeBlePayload } from './blePayload';
 
 // Built-in Google Plus Code Generator (100% Offline)
-function encodePlusCode(latitude, longitude) {
+function encodePlusCode(latitude: number, longitude: number) {
+
   const CODE_ALPHABET = '23456789CFGHJMPQRVWX';
   let lat = Math.min(Math.max(latitude, -90), 90) + 90;
   let lng = longitude;
@@ -44,7 +45,7 @@ function encodePlusCode(latitude, longitude) {
 }
 
 // Haversine Distance Formula
-function getDistanceInMeters(lat1, lon1, lat2, lon2) {
+function getDistanceInMeters(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371000;
   const dLat = (lat2 - lat1) * (Math.PI / 180);
   const dLon = (lon2 - lon1) * (Math.PI / 180);
@@ -74,11 +75,11 @@ const RANGE_OPTIONS = [
 const VIBE_STORAGE_KEY = '@tripoint_user_vibe';
 
 export default function RadarScreen() {
-  const [location, setLocation] = useState(null);
-  const [primaryLoc, setPrimaryLoc] = useState(null);
-  const [gridCode, setGridCode] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const [allUsers, setAllUsers] = useState([]);
+  const [location, setLocation] = useState<Location.LocationObject | null>(null)
+  const [primaryLoc, setPrimaryLoc] = useState<string | null>(null)
+  const [gridCode, setGridCode] = useState<string | null>(null)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const [allUsers, setAllUsers] = useState<Array<{ id: string; name: string; vibe: string; grid: string; distance: string; rawDistance: number;rssi: number }>>([]);
   const [selectedRange, setSelectedRange] = useState(Infinity);
   const [activePayload, setActivePayload] = useState('');
 
