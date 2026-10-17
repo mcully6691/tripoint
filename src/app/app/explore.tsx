@@ -44,7 +44,7 @@ const RANGE_OPTIONS = [
 ];
 
 export default function ExploreScreen() {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<(typeof PEER_USERS)[number] | null>(null);
   const [selectedRange, setSelectedRange] = useState(Infinity);
   const [heading, setHeading] = useState(0);
 
