@@ -44,7 +44,7 @@ const RANGE_OPTIONS = [
 ];
 
 export default function ExploreScreen() {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState<(typeof PEER_USERS)[number] | null>(null);
   const [selectedRange, setSelectedRange] = useState(Infinity);
   const [heading, setHeading] = useState(0);
 
@@ -62,7 +62,7 @@ export default function ExploreScreen() {
 
   const visibleUsers = PEER_USERS.filter((user) => user.rawDistance <= selectedRange);
 
-  const getCardinalDirection = (deg) => {
+  const getCardinalDirection = (deg: number) => {
     if (deg >= 337.5 || deg < 22.5) return 'N';
     if (deg >= 22.5 && deg < 67.5) return 'NE';
     if (deg >= 67.5 && deg < 112.5) return 'E';
@@ -135,7 +135,7 @@ export default function ExploreScreen() {
               style={[
                 styles.marker,
                 styles.peerMarker,
-                { top: user.top, left: user.left },
+                { top: user.top as `${number}%`, left: user.left as `${number}%` },
               ]}
               onPress={() => setSelectedUser(user)}
             >

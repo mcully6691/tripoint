@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { logMetric, initTestLogger } from './logger';
+import { logMetric, initTestLogger } from '../logger';
 
 export default function FieldTestScreen() {
   const [activeScenario, setActiveScenario] = useState<'CONCOURSE' | 'IN_SEAT' | 'DEAD_ZONE'>('CONCOURSE');
